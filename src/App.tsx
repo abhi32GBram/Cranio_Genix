@@ -1,4 +1,3 @@
-// src/App.tsx
 import React, { useState, useRef } from 'react';
 import Header from './components/Header';
 import UploadForm from './components/UploadForm';
@@ -7,14 +6,16 @@ import ResultArea from './components/ResultArea';
 import Footer from './components/Footer';
 import { usePredictScan } from './hooks/usePredictScan';
 import type { PredictionResult } from './types/Prediction';
+import type { PatientRecord } from './types/PatientRecord';
 
 const App: React.FC = () => {
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [file, setFile] = useState<File | null>(null);
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
   const [showDetails, setShowDetails] = useState<boolean>(false);
+  const [patientId, setPatientId] = useState<string>('');
 
-  const { prediction, loading, error, predict } = usePredictScan();
+  const { prediction, loading, error, predict, patientData } = usePredictScan();
 
   // Handle file selection
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -31,11 +32,13 @@ const App: React.FC = () => {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (!file) return;
-
-    predict(file).then(() => {
+    predict(file, patientId).then(() => {
       console.log('Prediction:', prediction); // Logs the updated prediction
+      console.log('Patient Data:', patientData);
     });
-  };  // Toggle detailed stats visibility
+  };
+
+  // Toggle detailed stats visibility
   const toggleDetails = () => {
     setShowDetails(!showDetails);
   };
@@ -43,7 +46,6 @@ const App: React.FC = () => {
   return (
     <div className="container">
       <Header />
-
       <main>
         {/* Upload Form */}
         <UploadForm
@@ -52,6 +54,8 @@ const App: React.FC = () => {
           isLoading={loading}
           onFileChange={handleFileChange}
           onSubmit={handleSubmit}
+          patientId={patientId}
+          onPatientIdChange={(e) => setPatientId(e.target.value)}
         />
 
         {/* Image Preview */}
@@ -61,13 +65,13 @@ const App: React.FC = () => {
         {(prediction || error) && (
           <ResultArea
             prediction={prediction ?? undefined}
+            patientData={patientData ?? undefined}
             showDetails={showDetails}
             toggleDetails={toggleDetails}
             error={error}
           />
         )}
       </main>
-
       <Footer />
     </div>
   );

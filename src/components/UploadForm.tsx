@@ -1,23 +1,41 @@
+// src/components/UploadForm.tsx
+
 import React from 'react';
 
+// UploadForm.tsx
+
 interface UploadFormProps {
+  // 👇 Updated line:
   fileInputRef: React.RefObject<HTMLInputElement | null>;
   file: File | null;
   isLoading: boolean;
   onFileChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   onSubmit: (e: React.FormEvent) => void;
+  patientId: string;
+  onPatientIdChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
-
 const UploadForm: React.FC<UploadFormProps> = ({
   fileInputRef,
   file,
   isLoading,
   onFileChange,
   onSubmit,
+  patientId,
+  onPatientIdChange,
 }) => {
   return (
     <form id="upload-form" onSubmit={onSubmit} encType="multipart/form-data">
       <div className="upload-area">
+        {/* 👇 New Patient Input Field */}
+        <input
+          type="text"
+          placeholder="Enter patient name or ID"
+          value={patientId}
+          onChange={onPatientIdChange}
+          className="patient-id-input"
+          aria-label="Patient Name or ID"
+        />
+
         <input
           type="file"
           id="file-input"
@@ -39,7 +57,6 @@ const UploadForm: React.FC<UploadFormProps> = ({
         <div id="file-name" className="file-info">
           {file ? file.name : 'No file selected'}
         </div>
-
         <button
           type="submit"
           className="predict-btn"

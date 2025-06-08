@@ -345,13 +345,56 @@ footer {
 /* src/assets/css/cranio_styles.css */
 
 .logo {
-  max-width: 100%; /* Ensure the logo scales properly */
-  height: auto; /* Maintain aspect ratio */
-  margin-bottom: 1rem; /* Space between logo and subtitle */
-  display: block; /* Make sure it behaves like a block-level element */
+    max-width: 100%;
+    /* Ensure the logo scales properly */
+    height: auto;
+    /* Maintain aspect ratio */
+    margin-bottom: 1rem;
+    /* Space between logo and subtitle */
+    display: block;
+    /* Make sure it behaves like a block-level element */
 }
 
 /* Optional: Center the logo horizontally */
 header {
-  text-align: center; /* Center the header content */
+    text-align: center;
+    /* Center the header content */
+}
+
+.patient-id-input {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 16px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 1rem;
+}
+
+
+.combined-results {
+    display: flex;
+    gap: 2rem;
+    flex-wrap: wrap;
+}
+
+.patient-info-section,
+.prediction-section {
+    background-color: #f9f9f9;
+    padding: 1rem;
+    border-radius: 8px;
+    flex: 1;
+    min-width: 300px;
+}
+
+.patient-card h3 {
+    margin-top: 0;
+}
+
+.patient-details {
+    list-style: none;
+    padding-left: 0;
+}
+
+.patient-details li {
+    margin-bottom: 0.5rem;
 }
